@@ -21,6 +21,11 @@ namespace VehicleLicenseTax
         {
             Init();
         }
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel1.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://law-out.mof.gov.tw/LawContent.aspx?id=FL006130");
+        }
 
         private void SelectCarType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -117,16 +122,13 @@ namespace VehicleLicenseTax
 
             //當年度總天數
             int YearsDays = GetThisYearDays();
-            int DiffDays = GetFromDayTo();
+            
 
             //所得稅率
             decimal GetStamp = GetFormula();
 
             //所得當年度總額
             decimal Amount_ThisYear = Math.Truncate(GetStamp * YearsDays / YearsDays);
-
-            //所得依期間總額
-            decimal Amount_DiffDays = Math.Truncate(GetStamp * DiffDays / YearsDays);
 
             bool ThisYearCheck = radioButton1.Checked;
             bool diffDateCheck = radioButton2.Checked;
@@ -142,9 +144,6 @@ namespace VehicleLicenseTax
 
             //當年度總天數變數↓
             int dateToDisplay = dec31.DayOfYear;
-
-            //依期間天數差變數↓
-            int diffDateDays = GetFromDayTo();
 
             DateTime Moment = new DateTime(DateTime.Now.Year, 01, 01);
             int ThisYear = Moment.Year;
@@ -203,6 +202,7 @@ namespace VehicleLicenseTax
                     else
                         years = 365;
                     decimal money = Formula * timeSpan / years;
+
                     ShowResult.Text += $"使用期間:{countYear}-{s_Month}-{s_Day}~{countYear}-" +
                        $"{e_Month}-{e_Day} " + Environment.NewLine + $"計算天數:{timeSpan}" + Environment.NewLine
                      + $"汽缸CC數:{MotorCC_Type.SelectedItem.ToString()}" + Environment.NewLine +
@@ -528,17 +528,6 @@ namespace VehicleLicenseTax
             //當年度總天數變數↓
             int dateToDisplay = dec31.DayOfYear;
             return dateToDisplay;
-        }
-
-        /// <summary>計算依期間的日期差 </summary>
-        private int GetFromDayTo()
-        {
-
-            DateTime date1 = dateTimePicker1.Value;
-            DateTime date2 = dateTimePicker2.Value;
-            TimeSpan span = date2 - date1;
-            int diffDays = span.Days + 1;
-            return diffDays;
         }
     }
     #endregion

@@ -270,6 +270,7 @@ namespace VehicleLicenseTax
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "2.使用牌照稅稅額對照表及電動車應納稅額表";
             this.linkLabel1.UseCompatibleTextRendering = true;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // MainPanel
             // 
